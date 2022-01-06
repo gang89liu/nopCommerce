@@ -187,6 +187,7 @@ namespace Nop.Data.Migrations
             _migrationManager.BuildTable<QueuedEmail>(Create);
 
             _migrationManager.BuildTable<NewsItem>(Create);
+            _migrationManager.BuildTable<NewsCategory>(Create);
             _migrationManager.BuildTable<NewsComment>(Create);
 
             _migrationManager.BuildTable<Poll>(Create);

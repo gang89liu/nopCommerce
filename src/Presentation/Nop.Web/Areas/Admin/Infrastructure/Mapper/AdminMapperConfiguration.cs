@@ -1186,6 +1186,12 @@ namespace Nop.Web.Areas.Admin.Infrastructure.Mapper
             CreateMap<NewsItemModel, NewsItem>()
                 .ForMember(entity => entity.CreatedOnUtc, options => options.Ignore());
 
+            CreateMap<NewsCategory, NewsCategoryModel>()
+           .ForMember(model => model.CreatedOn, options => options.Ignore())
+           .ForMember(model => model.SeName, options => options.Ignore());
+            CreateMap<NewsCategoryModel, NewsCategory>()
+                .ForMember(entity => entity.CreatedOnUtc, options => options.Ignore());
+
             CreateMap<NewsSettings, NewsSettingsModel>()
                 .ForMember(model => model.AllowNotRegisteredUsersToLeaveComments_OverrideForStore, options => options.Ignore())
                 .ForMember(model => model.Enabled_OverrideForStore, options => options.Ignore())

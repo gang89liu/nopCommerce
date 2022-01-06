@@ -26,7 +26,7 @@ namespace Nop.Services.News
 
         #region Ctor
 
-        public NewsService(
+        protected NewsService(
             IRepository<NewsComment> newsCommentRepository,
             IRepository<NewsItem> newsItemRepository,
             IStaticCacheManager staticCacheManager,
