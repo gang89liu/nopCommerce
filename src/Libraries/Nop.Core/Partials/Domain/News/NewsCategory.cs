@@ -1,5 +1,6 @@
 ﻿using System;
 using Nop.Core.Domain.Common;
+using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Stores;
 
@@ -8,7 +9,7 @@ namespace Nop.Core.Domain.News
     /// <summary>
     /// Represents a news category
     /// </summary>
-    public partial class NewsCategory : BaseEntity, ISlugSupported, IStoreMappingSupported, ISoftDeletedEntity
+    public partial class NewsCategory : BaseEntity, ILocalizedEntity, ISlugSupported, IStoreMappingSupported, ISoftDeletedEntity
     {
         /// <summary>
         /// Gets or sets the news category name

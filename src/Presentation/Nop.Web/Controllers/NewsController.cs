@@ -153,6 +153,36 @@ namespace Nop.Web.Controllers
             return View(model);
         }
 
+        public virtual async Task<IActionResult> NewsCategory(int newsCategoryId)
+        {
+            if (!_newsSettings.Enabled)
+                return RedirectToRoute("Homepage");
+
+            var newsCategory = await _newsService.GetNewsCategoryByIdAsync(newsCategoryId);
+            if (newsCategory == null)
+                return InvokeHttp404();
+
+            var notAvailable =
+                //published?
+                !newsCategory.Published ||
+                //Store mapping
+                !await _storeMappingService.AuthorizeAsync(newsCategory);
+            //Check whether the current user has a "Manage news" permission (usually a store owner)
+            //We should allows him (her) to use "Preview" functionality
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews);
+            if (notAvailable && !hasAdminAccess)
+                return InvokeHttp404();
+
+            var model = new NewsCategoryModel();
+            model = await _newsModelFactory.PrepareNewsCategoryModelAsync(model, newsCategory);
+
+            //display "edit" (manage) link
+            if (hasAdminAccess)
+                DisplayEditLink(Url.Action("NewsCategoryEdit", "NewsCategory", new { id = newsCategory.Id, area = AreaNames.Admin }));
+
+            return View(model);
+        }
+
         [HttpPost, ActionName("NewsItem")]
         [AutoValidateAntiforgeryToken]
         [FormValueRequired("add-comment")]

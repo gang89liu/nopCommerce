@@ -42,7 +42,7 @@ namespace Nop.Web.Areas.Admin.Factories
 
         #region Ctor
 
-        public NewsModelFactory(CatalogSettings catalogSettings,
+        protected NewsModelFactory(CatalogSettings catalogSettings,
             IBaseAdminModelFactory baseAdminModelFactory,
             ICustomerService customerService,
             IDateTimeHelper dateTimeHelper,

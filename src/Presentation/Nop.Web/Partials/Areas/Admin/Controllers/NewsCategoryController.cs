@@ -34,6 +34,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         private readonly IStoreMappingService _storeMappingService;
         private readonly IStoreService _storeService;
         private readonly IUrlRecordService _urlRecordService;
+        private readonly ILocalizedEntityService _localizedEntityService;
 
         #endregion
 
@@ -48,7 +49,8 @@ namespace Nop.Web.Areas.Admin.Controllers
             IPermissionService permissionService,
             IStoreMappingService storeMappingService,
             IStoreService storeService,
-            IUrlRecordService urlRecordService)
+            IUrlRecordService urlRecordService,
+            ILocalizedEntityService localizedEntityService)
         {
             _customerActivityService = customerActivityService;
             _eventPublisher = eventPublisher;
@@ -60,10 +62,10 @@ namespace Nop.Web.Areas.Admin.Controllers
             _storeMappingService = storeMappingService;
             _storeService = storeService;
             _urlRecordService = urlRecordService;
+            _localizedEntityService = localizedEntityService;
         }
 
         #endregion
-
 
         #region Utilities
 
@@ -90,6 +92,37 @@ namespace Nop.Web.Areas.Admin.Controllers
                     if (storeMappingToDelete != null)
                         await _storeMappingService.DeleteStoreMappingAsync(storeMappingToDelete);
                 }
+            }
+        }
+
+        /// <returns>A task that represents the asynchronous operation</returns>
+        protected virtual async Task UpdateLocalesAsync(NewsCategory category, NewsCategoryModel model)
+        {
+            foreach (var localized in model.Locales)
+            {
+                await _localizedEntityService.SaveLocalizedValueAsync(category,
+                    x => x.Name,
+                    localized.Name,
+                    localized.LanguageId);
+
+                await _localizedEntityService.SaveLocalizedValueAsync(category,
+                    x => x.MetaKeywords,
+                    localized.MetaKeywords,
+                    localized.LanguageId);
+
+                await _localizedEntityService.SaveLocalizedValueAsync(category,
+                    x => x.MetaDescription,
+                    localized.MetaDescription,
+                    localized.LanguageId);
+
+                await _localizedEntityService.SaveLocalizedValueAsync(category,
+                    x => x.MetaTitle,
+                    localized.MetaTitle,
+                    localized.LanguageId);
+
+                //search engine name
+                var seName = await _urlRecordService.ValidateSeNameAsync(category, localized.SeName, localized.Name, false);
+                await _urlRecordService.SaveSlugAsync(category, seName, localized.LanguageId);
             }
         }
 
@@ -157,6 +190,9 @@ namespace Nop.Web.Areas.Admin.Controllers
                 var seName = await _urlRecordService.ValidateSeNameAsync(newsCategory, model.SeName, model.Name, true);
                 await _urlRecordService.SaveSlugAsync(newsCategory, seName, 0);
 
+                //locales
+                await UpdateLocalesAsync(newsCategory, model);
+
                 //Stores
                 await SaveStoreMappingsAsync(newsCategory, model);
 
@@ -214,6 +250,9 @@ namespace Nop.Web.Areas.Admin.Controllers
                 //search engine name
                 var seName = await _urlRecordService.ValidateSeNameAsync(newsCategory, model.SeName, model.Name, true);
                 await _urlRecordService.SaveSlugAsync(newsCategory, seName, 0);
+
+                //locales
+                await UpdateLocalesAsync(newsCategory, model);
 
                 //stores
                 await SaveStoreMappingsAsync(newsCategory, model);

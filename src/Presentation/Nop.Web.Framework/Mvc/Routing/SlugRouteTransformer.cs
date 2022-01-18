@@ -150,6 +150,12 @@ namespace Nop.Web.Framework.Mvc.Routing
                     values[NopPathRouteDefaults.NewsItemIdFieldKey] = urlRecord.EntityId;
                     values[NopPathRouteDefaults.SeNameFieldKey] = urlRecord.Slug;
                     break;
+                case "newscategory":
+                    values[NopPathRouteDefaults.ControllerFieldKey] = "News";
+                    values[NopPathRouteDefaults.ActionFieldKey] = "NewsCategory";
+                    values[NopPathRouteDefaults.NewsItemIdFieldKey] = urlRecord.EntityId;
+                    values[NopPathRouteDefaults.SeNameFieldKey] = urlRecord.Slug;
+                    break;
 
                 case "blogpost":
                     values[NopPathRouteDefaults.ControllerFieldKey] = "Blog";

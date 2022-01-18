@@ -17,6 +17,7 @@ namespace Nop.Web.Models.News
         public string Name { get; set; }
         public string ParentCategoryName { get; set; }
         public int ParentCategoryId { get; set; }
+        public int DisplayOrder { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }
