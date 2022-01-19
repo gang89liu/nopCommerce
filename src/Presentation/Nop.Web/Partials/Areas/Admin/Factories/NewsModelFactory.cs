@@ -78,10 +78,9 @@ namespace Nop.Web.Areas.Admin.Factories
                 throw new ArgumentNullException(nameof(searchModel));
 
             //get news categories
-            var newsCategories = await _newsService.GetAllNewsCategoryAsync(showHidden: true,
+            var newsCategories = await _newsService.GetAllNewsCategoryAsync(categoryName: searchModel.SearchName, showHidden: true,
                 storeId: searchModel.SearchStoreId,
-                pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize,
-                name: searchModel.SearchName);
+                pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
 
             //prepare list model
             var model = await new NewsCategoryListModel().PrepareToGridAsync(searchModel, newsCategories, () =>
@@ -94,6 +93,7 @@ namespace Nop.Web.Areas.Admin.Factories
                     //convert dates to the user time
                     newsCategoryModel.CreatedOn = await _dateTimeHelper.ConvertToUserTimeAsync(newsCategory.CreatedOnUtc, DateTimeKind.Utc);
 
+                    newsCategoryModel.Breadcrumb = await _newsService.GetFormattedBreadCrumbAsync(newsCategory);
                     //fill in additional values (not existing in the entity)
                     newsCategoryModel.SeName = await _urlRecordService.GetSeNameAsync(newsCategory, null, true, false);
 
@@ -149,7 +149,7 @@ namespace Nop.Web.Areas.Admin.Factories
 
 
             //prepare available parent categories
-            await _baseAdminModelFactory.PrepareCategoriesAsync(model.AvailableCategories,
+            await _baseAdminModelFactory.PrepareNewsCategoriesAsync(model.AvailableCategories,
                 defaultItemText: await _localizationService.GetResourceAsync("Admin.Contentmanagement.News.NewsCategories.Fields.Parent.None"));
 
             //prepare available stores

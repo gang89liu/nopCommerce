@@ -18,6 +18,16 @@ namespace Nop.Web.Areas.Admin.Infrastructure.Cache
         public static CacheKey CategoriesListKey => new CacheKey("Nop.pres.admin.categories.list-{0}", CategoriesListPrefixCacheKey);
         public static string CategoriesListPrefixCacheKey => "Nop.pres.admin.categories.list";
 
+
+        /// <summary>
+        /// Key for news categories caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : show hidden records?
+        /// </remarks>
+        public static CacheKey NewsCategoriesListKey => new CacheKey("Nop.pres.admin.news.categories.list-{0}", NewsCategoriesListPrefixCacheKey);
+        public static string NewsCategoriesListPrefixCacheKey => "Nop.pres.admin.news.categories.list";
+
         /// <summary>
         /// Key for manufacturers caching
         /// </summary>

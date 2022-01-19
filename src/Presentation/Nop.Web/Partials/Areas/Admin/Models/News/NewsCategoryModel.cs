@@ -63,6 +63,9 @@ namespace Nop.Web.Areas.Admin.Models.News
 
         public IList<NewsCategoryLocalizedModel> Locales { get; set; }
 
+        public string Breadcrumb { get; set; }
+
+
         #endregion
     }
 

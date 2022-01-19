@@ -59,7 +59,7 @@ namespace Nop.Web.Factories
             {
                 var language = await _workContext.GetWorkingLanguageAsync();
                 var store = await _storeContext.GetCurrentStoreAsync();
-                var newsCategories = await _newsService.GetAllNewsCategoryAsync(language.Id, store.Id, 0, _newsSettings.MainPageNewsCount);
+                var newsCategories = await _newsService.GetAllNewsCategoryAsync(string.Empty, language.Id, store.Id, 0, _newsSettings.MainPageNewsCount);
 
                 return new HomepageNewsCategoriesModel
                 {
@@ -92,7 +92,7 @@ namespace Nop.Web.Factories
 
             var language = await _workContext.GetWorkingLanguageAsync();
             var store = await _storeContext.GetCurrentStoreAsync();
-            var newsCategories = await _newsService.GetAllNewsCategoryAsync(language.Id, store.Id, command.PageNumber - 1, command.PageSize);
+            var newsCategories = await _newsService.GetAllNewsCategoryAsync(string.Empty, language.Id, store.Id, command.PageNumber - 1, command.PageSize);
 
             var model = new NewsCategoryListModel
             {

@@ -20,6 +20,7 @@ using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
+using Nop.Services.News;
 using Nop.Services.Plugins;
 using Nop.Services.Shipping;
 using Nop.Services.Shipping.Date;
@@ -61,6 +62,7 @@ namespace Nop.Web.Areas.Admin.Factories
         private readonly ITaxCategoryService _taxCategoryService;
         private readonly ITopicTemplateService _topicTemplateService;
         private readonly IVendorService _vendorService;
+        private readonly INewsService _newsService;
 
         #endregion
 
@@ -88,7 +90,8 @@ namespace Nop.Web.Areas.Admin.Factories
             IStoreService storeService,
             ITaxCategoryService taxCategoryService,
             ITopicTemplateService topicTemplateService,
-            IVendorService vendorService)
+            IVendorService vendorService,
+            INewsService newsService)
         {
             _categoryService = categoryService;
             _categoryTemplateService = categoryTemplateService;
@@ -113,6 +116,7 @@ namespace Nop.Web.Areas.Admin.Factories
             _taxCategoryService = taxCategoryService;
             _topicTemplateService = topicTemplateService;
             _vendorService = vendorService;
+            _newsService = newsService;
         }
 
         #endregion
@@ -160,6 +164,41 @@ namespace Nop.Web.Areas.Admin.Factories
                 return await categories.SelectAwait(async c => new SelectListItem
                 {
                     Text = await _categoryService.GetFormattedBreadCrumbAsync(c, categories),
+                    Value = c.Id.ToString()
+                }).ToListAsync();
+            });
+
+            var result = new List<SelectListItem>();
+            //clone the list to ensure that "selected" property is not set
+            foreach (var item in listItems)
+            {
+                result.Add(new SelectListItem
+                {
+                    Text = item.Text,
+                    Value = item.Value
+                });
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get category list
+        /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the category list
+        /// </returns>
+        protected virtual async Task<List<SelectListItem>> GetNewsCategoryListAsync(bool showHidden = true)
+        {
+            var cacheKey = _staticCacheManager.PrepareKeyForDefaultCache(NopModelCacheDefaults.NewsCategoriesListKey, showHidden);
+            var listItems = await _staticCacheManager.GetAsync(cacheKey, async () =>
+            {
+                var categories = await _newsService.GetAllNewsCategoriesAsync(showHidden: showHidden);
+                return await categories.SelectAwait(async c => new SelectListItem
+                {
+                    Text = await _newsService.GetFormattedBreadCrumbAsync(c, categories),
                     Value = c.Id.ToString()
                 }).ToListAsync();
             });
@@ -530,6 +569,29 @@ namespace Nop.Web.Areas.Admin.Factories
 
             //prepare available categories
             var availableCategoryItems = await GetCategoryListAsync();
+            foreach (var categoryItem in availableCategoryItems)
+            {
+                items.Add(categoryItem);
+            }
+
+            //insert special item for the default value
+            await PrepareDefaultItemAsync(items, withSpecialDefaultItem, defaultItemText);
+        }
+
+        /// <summary>
+        /// Prepare available categories
+        /// </summary>
+        /// <param name="items">Category items</param>
+        /// <param name="withSpecialDefaultItem">Whether to insert the first special item for the default value</param>
+        /// <param name="defaultItemText">Default item text; pass null to use default value of the default item text</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        public virtual async Task PrepareNewsCategoriesAsync(IList<SelectListItem> items, bool withSpecialDefaultItem = true, string defaultItemText = null)
+        {
+            if (items == null)
+                throw new ArgumentNullException(nameof(items));
+
+            //prepare available categories
+            var availableCategoryItems = await GetNewsCategoryListAsync();
             foreach (var categoryItem in availableCategoryItems)
             {
                 items.Add(categoryItem);

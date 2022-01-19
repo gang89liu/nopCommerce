@@ -43,9 +43,21 @@ namespace Nop.Services.News
         /// A task that represents the asynchronous operation
         /// The task result contains the news items
         /// </returns>
-        Task<IPagedList<NewsCategory>> GetAllNewsCategoryAsync(int languageId = 0, int storeId = 0,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, string name = null);
+        Task<IPagedList<NewsCategory>> GetAllNewsCategoryAsync(string categoryName, int languageId = 0, int storeId = 0,
+            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false, bool? overridePublished = null);
 
+        Task<IList<NewsCategory>> GetAllNewsCategoriesAsync(int languageId = 0, int storeId = 0, bool showHidden = false);
+
+        Task<IList<NewsCategory>> GetAllNewsCategoriesByParentCategoryIdAsync(int parentCategoryId,
+            bool showHidden = false);
+
+
+        Task<IList<int>> GetChildNewsCategoryIdsAsync(int parentCategoryId, int storeId = 0, bool showHidden = false);
+
+
+        Task<IList<NewsCategory>> GetAllCategoriesByParentCategoryIdAsync(int parentCategoryId,
+            int languageId = 0, int storeId = 0,
+            bool showHidden = false);
         /// <summary>
         /// Inserts a news category
         /// </summary>
@@ -62,19 +74,31 @@ namespace Nop.Services.News
 
 
         /// <summary>
-        /// Gets all categories filtered by parent category identifier
+        /// Get formatted category breadcrumb 
+        /// Note: ACL and store mapping is ignored
         /// </summary>
-        /// <param name="parentCategoryId">Parent category identifier</param>
-        /// <param name="languageId">
-        /// <param name="storeId">
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="category">Category</param>
+        /// <param name="allCategories">All categories</param>
+        /// <param name="separator">Separator</param>
+        /// <param name="languageId">Language identifier for localization</param>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the categories
+        /// The task result contains the formatted breadcrumb
         /// </returns>
-        Task<IList<NewsCategory>> GetAllCategoriesByParentCategoryIdAsync(int parentCategoryId,
-            int languageId = 0, int storeId = 0,
-            bool showHidden = false);
+        Task<string> GetFormattedBreadCrumbAsync(NewsCategory category, IList<NewsCategory> allCategories = null,
+            string separator = ">>", int languageId = 0);
+
+        /// <summary>
+        /// Get category breadcrumb 
+        /// </summary>
+        /// <param name="category">Category</param>
+        /// <param name="allCategories">All categories</param>
+        /// <param name="showHidden">A value indicating whether to load hidden records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the category breadcrumb 
+        /// </returns>
+        Task<IList<NewsCategory>> GetCategoryBreadCrumbAsync(NewsCategory category, IList<NewsCategory> allCategories = null, bool showHidden = false);
 
         #endregion
     }
