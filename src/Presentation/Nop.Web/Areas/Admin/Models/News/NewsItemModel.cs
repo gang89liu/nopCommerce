@@ -20,6 +20,8 @@ namespace Nop.Web.Areas.Admin.Models.News
 
             SelectedStoreIds = new List<int>();
             AvailableStores = new List<SelectListItem>();
+
+            AvailableCategories = new List<SelectListItem>();
         }
 
         #endregion
@@ -39,6 +41,7 @@ namespace Nop.Web.Areas.Admin.Models.News
         public IList<int> SelectedStoreIds { get; set; }
 
         public IList<SelectListItem> AvailableStores { get; set; }
+
 
         [NopResourceDisplayName("Admin.ContentManagement.News.NewsItems.Fields.Title")]
         public string Title { get; set; }
@@ -81,6 +84,12 @@ namespace Nop.Web.Areas.Admin.Models.News
 
         [NopResourceDisplayName("Admin.ContentManagement.News.NewsItems.Fields.CreatedOn")]
         public DateTime CreatedOn { get; set; }
+
+        [NopResourceDisplayName("Admin.ContentManagement.News.NewsItems.Fields.NewsCategoryId")]
+        public int NewsCategoryId { get; set; }
+
+
+        public IList<SelectListItem> AvailableCategories { get; set; }
 
         #endregion
     }

@@ -173,6 +173,9 @@ namespace Nop.Web.Areas.Admin.Factories
                 model.AllowComments = true;
             }
 
+            //prepare available news categories
+            await _baseAdminModelFactory.PrepareNewsCategoriesAsync(model.AvailableCategories, defaultItemText:"请选择");
+
             //prepare available languages
             await _baseAdminModelFactory.PrepareLanguagesAsync(model.AvailableLanguages, false);
 
