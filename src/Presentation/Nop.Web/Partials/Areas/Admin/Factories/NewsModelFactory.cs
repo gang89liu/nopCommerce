@@ -9,10 +9,10 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.News;
 using Nop.Core.Domain.Security;
-using Nop.Core.Html;
 using Nop.Services.Common;
 using Nop.Services.Customers;
 using Nop.Services.Helpers;
+using Nop.Services.Html;
 using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.News;
@@ -41,6 +41,7 @@ namespace Nop.Web.Areas.Admin.Factories
             IBaseAdminModelFactory baseAdminModelFactory,
             ICustomerService customerService,
             IDateTimeHelper dateTimeHelper,
+            IHtmlFormatter htmlFormatter,
             ILanguageService languageService,
             ILocalizationService localizationService,
             INewsService newsService,
@@ -52,6 +53,7 @@ namespace Nop.Web.Areas.Admin.Factories
              baseAdminModelFactory,
              customerService,
              dateTimeHelper,
+             htmlFormatter,
              languageService,
              localizationService,
              newsService,
@@ -116,7 +118,7 @@ namespace Nop.Web.Areas.Admin.Factories
         /// </returns>
         public virtual async Task<NewsCategoryModel> PrepareNewsCategoryModelAsync(NewsCategoryModel model, NewsCategory newsCategory, bool excludeProperties = false)
         {
-            Action<NewsCategoryLocalizedModel, int> localizedModelConfiguration = null;
+            Func<NewsCategoryLocalizedModel, int, Task> localizedModelConfiguration = null;
             //fill in model values from the entity
             if (newsCategory != null)
             {
