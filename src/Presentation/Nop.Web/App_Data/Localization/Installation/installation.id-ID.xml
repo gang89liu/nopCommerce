@@ -34,10 +34,10 @@
     <Value>Format SQL connection string salah</Value>
   </LocaleResource>
   <LocaleResource Name="Country">
-    <Value>Negara</Value>
+    <Value>Country</Value>
   </LocaleResource>
   <LocaleResource Name="CountrySelect">
-    <Value>Pilih negara Anda...</Value>
+    <Value>Select your country...</Value>
   </LocaleResource>
   <LocaleResource Name="CreateDatabaseIfDoesNotExist">
     <Value>Buat database jika belum ada</Value>

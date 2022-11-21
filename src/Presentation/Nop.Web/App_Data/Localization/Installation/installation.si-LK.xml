@@ -34,10 +34,10 @@
     <Value>වැරදි SQL සම්බන්ධතා යෙදුම් ආකෘතියක්</Value>
   </LocaleResource>
   <LocaleResource Name="Country">
-    <Value>රට</Value>
+    <Value>Country</Value>
   </LocaleResource>
   <LocaleResource Name="CountrySelect">
-    <Value>ඔබගේ රට තෝරන්න</Value>
+    <Value>Select your country...</Value>
   </LocaleResource>
   <LocaleResource Name="CreateDatabaseIfDoesNotExist">
     <Value>නොපවතී නම් දත්ත ගබඩාව සාදන්න</Value>
@@ -79,7 +79,7 @@
     <Value>ස්ථාපනය කරන්න</Value>
   </LocaleResource>
   <LocaleResource Name="Installing">
-    <Value>nopCommerce ස්ථාපනය කරමින් පවතී...</Value>
+    <Value>NopCommerce ස්ථාපනය කරමින් පවතී...</Value>
   </LocaleResource>
   <LocaleResource Name="IntegratedAuthentication">
     <Value>ඒකාබද්ධ වින්ඩෝස් සත්‍යාපනය භාවිතා කරන්න</Value>

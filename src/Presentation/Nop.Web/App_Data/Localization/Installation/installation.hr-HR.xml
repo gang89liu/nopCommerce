@@ -34,10 +34,10 @@
     <Value>Krivi format SQL podataka za povezivanje</Value>
   </LocaleResource>
   <LocaleResource Name="Country">
-    <Value>Država</Value>
+    <Value>Country</Value>
   </LocaleResource>
   <LocaleResource Name="CountrySelect">
-    <Value>Odaberite vašu državu</Value>
+    <Value>Select your country...</Value>
   </LocaleResource>
   <LocaleResource Name="CreateDatabaseIfDoesNotExist">
     <Value>Stvorite bazu podataka ako ne postoji</Value>
