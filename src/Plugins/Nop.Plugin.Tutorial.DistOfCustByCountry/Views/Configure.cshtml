@@ -1,24 +1,46 @@
-﻿@using Nop.Web.Framework.Models.DataTables
+﻿@model CustomersByCountrySearchModel
 @{
-    Layout = "_ConfigurePlugin";
+    ViewBag.PageTitle = T("Admin.Reports.Customers.DistOfCustByCountry").Text;
     NopHtml.SetActiveMenuItemSystemName("DistOfCustByCountry");
+    Layout = "_AdminLayout";
 }
 
-@await Html.PartialAsync("Table", new DataTablesModel {
-    Name = "customersDistributionByCountry-grid",
-    UrlRead = new DataUrl("GetCustomersCountByCountry", "TutorialDistOfCustByCountry"),
-    Paging = false,
-    ColumnCollection = new List<ColumnProperty>
-    {
-        new ColumnProperty(nameof(CustomersDistribution.Country))
-        {
-            Title = "Country",
-            Width = "300"
-        },
-        new ColumnProperty(nameof(CustomersDistribution.NoOfCustomers))
-        {
-            Title = "Number Of Customers",
-            Width = "100"
-        }
-    }
-})
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        @T("Admin.Reports.Customers.DistOfCustByCountry")
+    </h1>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <nop-doc-reference asp-string-resource="@T("Admin.Documentation.Reference.Reports", Nop.Services.Common.NopLinksDefaults.Docs.Reports 
+                        + Nop.Services.Common.NopLinksDefaults.Utm.OnAdmin)" />
+
+                        @await Html.PartialAsync("Table", new DataTablesModel {
+                            Name = "customers-distributionbycountry-grid",
+                            UrlRead = new DataUrl("GetCustomersCountByCountry", "DistOfCustByCountry" ,null),
+                            Length = Model.PageSize,
+                            LengthMenu = Model.AvailablePageSizes,
+                            ColumnCollection = new List<ColumnProperty>
+                            {
+                            new ColumnProperty(nameof(CustomersDistribution.Country))
+                            {
+                            Title = "Country",
+                            Width = "300"
+                            },
+                            new ColumnProperty(nameof(CustomersDistribution.NoOfCustomers))
+                            {
+                            Title = "Number Of Customers",
+                            Width = "100"
+                            }
+                            }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

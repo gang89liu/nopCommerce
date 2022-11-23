@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac.Core;
+using DocumentFormat.OpenXml.EMMA;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Plugin.Tutorial.DistOfCustByCountry.Models;
@@ -42,11 +43,12 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetCustomersCountByCountry()
+        public async Task<IActionResult> GetCustomersCountByCountry(CustomersByCountrySearchModel searchModel)
         {
             try
             {
-                return Ok(new DataTablesModel { Data = await _customersByCountry.GetCustomersDistributionByCountryAsync() });
+                var model = await _customersByCountry.GetCustomersDistributionByCountryAsync(searchModel);
+                return Json(model);
             }
             catch (Exception ex)
             {

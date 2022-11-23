@@ -10,6 +10,6 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry.Services
 {
     public interface ICustomersByCountry
     {
-        Task<List<CustomersDistribution>> GetCustomersDistributionByCountryAsync();
+        Task<CustomersByCountryPageModel> GetCustomersDistributionByCountryAsync(CustomersByCountrySearchModel searchModel);
     }
 }

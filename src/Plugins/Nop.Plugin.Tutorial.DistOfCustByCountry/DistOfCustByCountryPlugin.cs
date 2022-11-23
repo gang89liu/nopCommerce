@@ -20,10 +20,13 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry
     public class DistOfCustByCountryPlugin : BasePlugin, IAdminMenuPlugin
     {
         private readonly IWebHelper _webHelper;
+        private readonly ILocalizationService _localizationService;
 
-        public DistOfCustByCountryPlugin(IWebHelper webHelper)
+        public DistOfCustByCountryPlugin(IWebHelper webHelper
+            , ILocalizationService localizationService)
         {
             _webHelper = webHelper;
+            _localizationService = localizationService;
         }
 
         /// <summary>
@@ -31,12 +34,17 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry
         /// </summary>
         public override string GetConfigurationPageUrl()
         {
-            return $"{_webHelper.GetStoreLocation()}Admin/DistOfCustByCountry/Configure";
+            return $"{_webHelper.GetStoreLocation()}Admin/Report/DistOfCustByCountry";
         }
 
         public override async Task InstallAsync()
         {
             //Code you want to run while installing the plugin goes here.
+
+            await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
+            {
+                ["Admin.Reports.Customers.DistOfCustByCountry"] = "DistOfCustByCountry",
+            });
             await base.InstallAsync();
         }
 
@@ -44,19 +52,16 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry
         {
             var menuItem = new SiteMapNode()
             {
-                Url = "~/Admin/DistOfCustByCountry/Configure",
+                Url = "~/Admin/Report/DistOfCustByCountry",
                 SystemName = "DistOfCustByCountry",
                 IconClass = "far fa-dot-circle",
-                Title = "用户统计",
+                Title = _localizationService.GetResourceAsync("Admin.Reports.Customers.DistOfCustByCountry").Result,
                 Visible = true,
                 RouteValues = new RouteValueDictionary() { { "area", null } },
             };
             //var node = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
-            var node = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Reports");
-            if(node != null)
-            {
-                node = node.ChildNodes.FirstOrDefault(x => x.SystemName == "Customers");
-            }
+            var node = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Reports")
+                ?.ChildNodes.FirstOrDefault(x => x.SystemName == "Customers");
             if (node != null)
                 node.ChildNodes.Add(menuItem);
             else

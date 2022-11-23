@@ -8,6 +8,8 @@ using Nop.Services.Common;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Web.Framework.Models;
+using Nop.Web.Framework.Models.Extensions;
+using Nop.Web.Framework.UI.Paging;
 
 namespace Nop.Plugin.Tutorial.DistOfCustByCountry.Services
 {
@@ -25,10 +27,11 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry.Services
             _countryService = countryService;
             _customerService = customerService;
         }
-        public async Task<List<CustomersDistribution>> GetCustomersDistributionByCountryAsync()
+        public async Task<CustomersByCountryPageModel> GetCustomersDistributionByCountryAsync(CustomersByCountrySearchModel searchModel)
         {
-            return
-                   (await _customerService.GetAllCustomersAsync())
+
+            //get product attribute combinations
+            var result = (await _customerService.GetAllCustomersAsync())
                      .Where(c => c.ShippingAddressId != null)
                      .Select
                      (c => new
@@ -38,7 +41,19 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry.Services
                          c.Username
                      })
                      .GroupBy(c => c.Name)
-                     .Select(cbc => new CustomersDistribution { Country = cbc.Key, NoOfCustomers = cbc.Count() }).ToList();
+                     .Select(cbc => new CustomersDistribution { Country = cbc.Key, NoOfCustomers = cbc.Count() }).ToList()
+                     .ToPagedList(searchModel);
+
+            //prepare grid model
+            var model = new CustomersByCountryPageModel
+            {
+                Data = result,
+                Draw = searchModel.Draw,
+                RecordsTotal = result.TotalCount,
+                RecordsFiltered = result.TotalCount
+            };
+
+            return model;
         }
     }
 }

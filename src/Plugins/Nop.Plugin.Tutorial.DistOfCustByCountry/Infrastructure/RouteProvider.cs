@@ -16,12 +16,19 @@ namespace Nop.Plugin.Tutorial.DistOfCustByCountry.Infrastructure
         /// <param name="endpointRouteBuilder">Route builder</param>
         public void RegisterRoutes(IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapControllerRoute(name: "Plugins.Tutorial.DistOfCustByCountry.Configure",
-            "Plugins/Tutorial/DistOfCustByCountry/Configure",
-             defaults: new { controller = "DistOfCustByCountry", action = "Configure", area = AreaNames.Admin });
+            //endpointRouteBuilder.MapControllerRoute(name: "Plugins.Tutorial.DistOfCustByCountry.Configure",
+            //"Plugins/Tutorial/DistOfCustByCountry/Configure",
+            // defaults: new { controller = "DistOfCustByCountry", action = "Configure", area = AreaNames.Admin });
 
-            endpointRouteBuilder.MapControllerRoute("Plugin.Tutorial.DistOfCustByCountry.GetCustomersCountByCountry", "Plugins/Tutorial/DistOfCustByCountry/GetCustomersCountByCountry",
+            //endpointRouteBuilder.MapControllerRoute("Plugin.Tutorial.DistOfCustByCountry.GetCustomersCountByCountry", "Plugins/Tutorial/DistOfCustByCountry/GetCustomersCountByCountry",
+            //    new { controller = "DistOfCustByCountry", action = "GetCustomersCountByCountry", area = AreaNames.Admin });
+
+            endpointRouteBuilder.MapControllerRoute("Plugins.Tutorial.DistOfCustByCountry.Configure", "Admin/Report/DistOfCustByCountry",
+                new { controller = "DistOfCustByCountry", action = "Configure", area = AreaNames.Admin });
+
+            endpointRouteBuilder.MapControllerRoute("Plugin.Tutorial.DistOfCustByCountry.GetCustomersCountByCountry", "Admin/Report/DistOfCustByCountry/GetCustomersCountByCountry",
                 new { controller = "DistOfCustByCountry", action = "GetCustomersCountByCountry", area = AreaNames.Admin });
+
         }
 
         /// <summary>
