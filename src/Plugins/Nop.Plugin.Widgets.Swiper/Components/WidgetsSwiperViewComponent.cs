@@ -37,34 +37,34 @@ namespace Nop.Plugin.Widgets.Swiper.Components
         public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
         {
             var store = await _storeContext.GetCurrentStoreAsync();
-            var nivoSliderSettings = await _settingService.LoadSettingAsync<SwiperSettings>(store.Id);
+            var swiperSettings = await _settingService.LoadSettingAsync<SwiperSettings>(store.Id);
 
             var model = new PublicInfoModel
             {
-                Picture1Url = await GetPictureUrlAsync(nivoSliderSettings.Picture1Id),
-                Text1 = nivoSliderSettings.Text1,
-                Link1 = nivoSliderSettings.Link1,
-                AltText1 = nivoSliderSettings.AltText1,
+                Picture1Url = await GetPictureUrlAsync(swiperSettings.Picture1Id),
+                Text1 = swiperSettings.Text1,
+                Link1 = swiperSettings.Link1,
+                AltText1 = swiperSettings.AltText1,
 
-                Picture2Url = await GetPictureUrlAsync(nivoSliderSettings.Picture2Id),
-                Text2 = nivoSliderSettings.Text2,
-                Link2 = nivoSliderSettings.Link2,
-                AltText2 = nivoSliderSettings.AltText2,
+                Picture2Url = await GetPictureUrlAsync(swiperSettings.Picture2Id),
+                Text2 = swiperSettings.Text2,
+                Link2 = swiperSettings.Link2,
+                AltText2 = swiperSettings.AltText2,
 
-                Picture3Url = await GetPictureUrlAsync(nivoSliderSettings.Picture3Id),
-                Text3 = nivoSliderSettings.Text3,
-                Link3 = nivoSliderSettings.Link3,
-                AltText3 = nivoSliderSettings.AltText3,
+                Picture3Url = await GetPictureUrlAsync(swiperSettings.Picture3Id),
+                Text3 = swiperSettings.Text3,
+                Link3 = swiperSettings.Link3,
+                AltText3 = swiperSettings.AltText3,
 
-                Picture4Url = await GetPictureUrlAsync(nivoSliderSettings.Picture4Id),
-                Text4 = nivoSliderSettings.Text4,
-                Link4 = nivoSliderSettings.Link4,
-                AltText4 = nivoSliderSettings.AltText4,
+                Picture4Url = await GetPictureUrlAsync(swiperSettings.Picture4Id),
+                Text4 = swiperSettings.Text4,
+                Link4 = swiperSettings.Link4,
+                AltText4 = swiperSettings.AltText4,
 
-                Picture5Url = await GetPictureUrlAsync(nivoSliderSettings.Picture5Id),
-                Text5 = nivoSliderSettings.Text5,
-                Link5 = nivoSliderSettings.Link5,
-                AltText5 = nivoSliderSettings.AltText5
+                Picture5Url = await GetPictureUrlAsync(swiperSettings.Picture5Id),
+                Text5 = swiperSettings.Text5,
+                Link5 = swiperSettings.Link5,
+                AltText5 = swiperSettings.AltText5
             };
 
             if (string.IsNullOrEmpty(model.Picture1Url) && string.IsNullOrEmpty(model.Picture2Url) &&

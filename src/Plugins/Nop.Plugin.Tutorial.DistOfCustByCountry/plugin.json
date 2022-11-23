@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Tutorial",
+  "FriendlyName": "DistOfCustByCountry",
+  "SystemName": "Tutorial.DistOfCustByCountry",
+  "Version": "1.45",
+  "SupportedVersions": [ "4.50" ],
+  "Author": "nopCommerce team",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Tutorial.DistOfCustByCountry.dll",
+  "Description": "This plugin show the datatable"
+}
