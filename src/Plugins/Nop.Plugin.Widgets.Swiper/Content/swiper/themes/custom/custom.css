@@ -78,7 +78,7 @@
 /* CAPTION */
 
 .theme-custom-swiper .nivo-caption {
-	background-color: 333;
+	background-color: #333;
 }
 .theme-custom-swiper .nivo-caption a {
 	color: #fff;
@@ -111,16 +111,13 @@
 	max-width: 600px;
 	margin: -20px auto 40px;
 }
-.theme-custom-swiper .nivo-directionNav {
-	display: none;
-}
+  .theme-custom-swiper .swiper-pagination {
+    display: none;
+  }
 }
 
 @media all and (min-width: 1001px) {
 .theme-custom-swiper {
 	margin: -30px 0 60px;
-}
-.theme-custom-swiper .nivo-directionNav {
-	display: none; /* remove to use directional navigation */
 }
 }
